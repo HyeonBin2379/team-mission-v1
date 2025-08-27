@@ -1,6 +1,7 @@
-public interface StudentOutput {
+import java.util.Comparator;
 
-    void loadObjectFromFile(String fileName) throws Exception;
-    void rearrangeData();
-    void printInfo();
+public class StudentOutput {
+
+    public void rearrangeData(Comparator<Student> comparator) {
+    }
 }

@@ -4,7 +4,7 @@
 
 ## 1. 저장소 클론
 
-* 아래 2개의 명령어들을 차례로 입력해주세요.
+* 아래 2개의 명령어들을 차례로 입력합니다.
 
 ```
 git clone https://github.com/HyeonBin2379/team-mission-v1.git
@@ -14,13 +14,15 @@ cd team-mission-v1
 
 ## 2. 브랜치 생성
 
-* 아래의 명령어를 입력하여 각자 과제를 수행할 브랜치를 생성해주세요.
+* 저장소를 클론했다면, 아래의 명령어를 입력하여 각자 과제를 수행할 개인 브랜치를 생성합니다.
 
 ````
+git checkout main
+
 git checkout -b 영문이름
 ````
 
-* 브랜치 생성 예시
+* 개인 브랜치 생성 예시
 ```
 git checkout -b hyeonbin-lee
 ```
@@ -32,3 +34,15 @@ git checkout -b hyeonbin-lee
 * 메서드 이름 및 변수 이름 -> 카멜 표기법 사용
 * 클래스명 -> 파스칼 표기법 사용
 * 들여쓰기 등 나머지 코딩 컨벤션은 슬랙에 있는 코딩 컨벤션 적용 방법을 참고해주세요.(구글 자바 코딩 컨벤션 사용)
+
+## 4. 과제 구현
+
+* 인터페이스의 메서드를 각자 적절히 활용하여 `StudentInput`, `StudentOutput`, `SortedStudent`를 구현합니다.
+  (힌트: 인터페이스의 다중상속)
+* `Printable`에 정의된 정렬 결과 출력 메서드의 이름을 `printSortResult()`로 통일했습니다.
+  * `StudentOutput`의 `printInfo()` -> `printSortResult()`
+  * `SortedStudent`의 `printResult()` -> `printSortResult()`
+* 인터페이스에 없지만 요구사항에 명시된 메서드는 클래스를 참고해주세요.
+* `StudentOutput` 클래스
+  * `names` 필드는 배열 대신 리스트를 사용합니다.
+

@@ -1,7 +1,8 @@
-public interface SortedStudent {
+import java.util.Comparator;
 
-    void loadObjectFromFile() throws Exception;
-    void createTreeSet();
-    void printResult();
-    void outputObject() throws Exception;
+public class SortedStudent {
+
+    public void createTreeSet(Comparator<Student> comparator) {
+
+    }
 }
