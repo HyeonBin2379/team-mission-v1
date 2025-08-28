@@ -35,14 +35,22 @@ git checkout -b hyeonbin-lee
 * 클래스명 -> 파스칼 표기법 사용
 * 들여쓰기 등 나머지 코딩 컨벤션은 슬랙에 있는 코딩 컨벤션 적용 방법을 참고해주세요.(구글 자바 코딩 컨벤션 사용)
 
-## 4. 과제 구현
+## 4. 과제 구현 시 유의사항
+
+## 일반
+* 조 내부에서 공통으로 사용할 필드 타입 및 메서드 시그니처는 클래스 내부와 인터페이스에 작성했습니다.(해당 필드/메서드의 타입 및 시그니처는 변경하지 않습니다.)
+* 필요에 따라 새로운 필드/메서드를 추가할 경우, 타입/시그니처 제한이 없습니다.
+
+## 메서드 시그니처 관련
 
 * 인터페이스의 메서드를 각자 적절히 활용하여 `StudentInput`, `StudentOutput`, `SortedStudent`를 구현합니다.
   (힌트: 인터페이스의 다중상속)
-* `Printable`에 정의된 정렬 결과 출력 메서드의 이름을 `printSortResult()`로 통일했습니다.
-  * `StudentOutput`의 `printInfo()` -> `printSortResult()`
-  * `SortedStudent`의 `printResult()` -> `printSortResult()`
+* `Printable`에 정의된 정렬 결과 출력 메서드의 이름은 `printResult()`로 통일했습니다.
+  * `StudentOutput`의 `printInfo()` -> `printResult()`
+  * `SortedStudent`의 `printResult()` -> 그대로 사용
 * 인터페이스에 없지만 요구사항에 명시된 메서드는 클래스를 참고해주세요.
+
+## 필드 타입 관련
 * `StudentOutput` 클래스
   * `names` 필드는 배열 대신 리스트를 사용합니다.
-
+* 팀 미션 안내사항에 명시된 필드의 타입은 각각의 클래스에 작성해두었습니다.   
