@@ -2,6 +2,6 @@ import java.io.IOException;
 
 public interface Output {
 
-    default void outputObject() throws IOException {
+    default void outputObject(String fileName) throws IOException {
     }
 }
