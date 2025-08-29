@@ -6,5 +6,6 @@ public interface Input {
     default void loadCheck(String fileName) throws FileNotFoundException {
     }
 
-    void loadObjectFromFile(String fileName) throws IOException, ClassNotFoundException;
+    default void loadObjectFromFile(String fileName) throws IOException, ClassNotFoundException {
+    }
 }
