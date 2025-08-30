@@ -1,28 +1,26 @@
-package student;
+package student.output;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.TreeSet;
+import student.Student;
+import student.interfaces.ObjectWriter;
 
-public class SortedStudent extends AbstractOutput implements Input {
-
-    private static final int TOP_COUNT = 10;
-
-    private HashMap<String, Student> studentInfo;
-    private TreeSet<Student> sortedInfo;
+public class SortedStudent extends AbstractOutput implements ObjectWriter {
 
     private final String inputFile;
     private final String outputFile;
 
+    private TreeSet<Student> sortedInfo;
+
     public SortedStudent(String inputFile, String outputFile) {
+        super();
         this.inputFile = inputFile;
         this.outputFile = outputFile;
     }
@@ -43,13 +41,6 @@ public class SortedStudent extends AbstractOutput implements Input {
     public void createTreeSet(Comparator<Student> comparator) {
         sortedInfo = new TreeSet<>(comparator);
         sortedInfo.addAll(studentInfo.values());
-    }
-
-    @Override
-    public void loadObjectFromFile(String fileName) throws IOException, ClassNotFoundException {
-        Path path = Paths.get(fileName);
-        ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(path));
-        this.studentInfo = (HashMap<String, Student>) ois.readObject();
     }
 
     @Override

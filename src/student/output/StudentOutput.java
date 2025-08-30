@@ -1,11 +1,7 @@
-package student;
+package student.output;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -13,41 +9,32 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import student.Student;
+import student.interfaces.ObjectLoader;
 
-public class StudentOutput extends AbstractOutput implements Input {
+public class StudentOutput extends AbstractOutput implements ObjectLoader {
 
-    private HashMap<String, Student> studentInfo;
-    private List<Student> datas;
-    private List<String> names;
+    private final List<Student> datas;
+    private final List<String> names;
+
     private final String fileName;
 
     public StudentOutput(String fileName) {
-        this.studentInfo = new HashMap<>();
+        super();
         this.datas = new ArrayList<>();
         this.names = new ArrayList<>();
         this.fileName = fileName;
     }
 
-    @Override
-    public void loadObjectFromFile(String fileName) throws IOException, ClassNotFoundException {
-        Path path = Paths.get(fileName);
-        try (ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(path))) {
-            this.studentInfo = (HashMap<String, Student>) ois.readObject();
-        }
-    }
-
     public void rearrangeData(Comparator<Student> comparator) {
         Set<String> keys = studentInfo.keySet();
-
-        keys.stream()
-                .map(key -> studentInfo.get(key))
+        keys.stream().map(studentInfo::get)
                 .sorted(comparator)
                 .forEach(student -> {
                     names.add(student.getName());
                     datas.add(student);
                 });
-        studentInfo = (HashMap<String, Student>) IntStream.range(0, datas.size())
-                .boxed()
+        studentInfo = (HashMap<String, Student>) IntStream.range(0, datas.size()).boxed()
                 .collect(Collectors.toMap(names::get, datas::get));
     }
 

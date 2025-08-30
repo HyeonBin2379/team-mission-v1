@@ -1,5 +1,9 @@
 package student;
 
+import student.input.StudentInput;
+import student.output.SortedStudent;
+import student.output.StudentOutput;
+
 public class Main {
 
     public static void main(String[] args) {

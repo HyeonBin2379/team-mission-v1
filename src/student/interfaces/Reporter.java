@@ -1,6 +1,6 @@
-package student;
+package student.interfaces;
 
-public interface Printable extends Output {
+public interface Reporter {
 
     default void printUsage() {
         System.out.println("""

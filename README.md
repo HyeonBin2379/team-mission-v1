@@ -43,14 +43,14 @@ git checkout -b hyeonbin-lee
 
 ## 메서드 시그니처 관련
 
-* 인터페이스의 메서드를 각자 적절히 활용하여 `student.StudentInput`, `student.StudentOutput`, `student.SortedStudent`를 구현합니다.
+* 인터페이스의 메서드를 각자 적절히 활용하여 `student.input.StudentInput`, `student.output.StudentOutput`, `student.output.SortedStudent`를 구현합니다.
   (힌트: 인터페이스의 다중상속)
-* `student.Printable`에 정의된 정렬 결과 출력 메서드의 이름은 `printResult()`로 통일했습니다.
-  * `student.StudentOutput`의 `printInfo()` -> `printResult()`
-  * `student.SortedStudent`의 `printResult()` -> 그대로 사용
+* `student.interfaces.Reporter`에 정의된 정렬 결과 출력 메서드의 이름은 `printResult()`로 통일했습니다.
+  * `student.output.StudentOutput`의 `printInfo()` -> `printResult()`
+  * `student.output.SortedStudent`의 `printResult()` -> 그대로 사용
 * 인터페이스에 없지만 요구사항에 명시된 메서드는 클래스를 참고해주세요.
 
 ## 필드 타입 관련
-* `student.StudentOutput` 클래스
+* `student.output.StudentOutput` 클래스
   * `names` 필드는 배열 대신 리스트를 사용합니다.
 * 팀 미션 안내사항에 명시된 필드의 타입은 각각의 클래스에 작성해두었습니다.   
