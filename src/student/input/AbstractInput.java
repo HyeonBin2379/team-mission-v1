@@ -51,7 +51,7 @@ public abstract class AbstractInput implements Checker, ObjectWriter {
         insertEntryToMap(key, value);
     }
 
-    public void insertEntryToMap(String key, Student value) {
+    private void insertEntryToMap(String key, Student value) {
         value.setTotal();
         value.setAverage();
         value.setGrade();

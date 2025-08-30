@@ -26,6 +26,19 @@ public class StudentOutput extends AbstractOutput implements ObjectLoader {
         this.fileName = fileName;
     }
 
+    @Override
+    public void run() {
+        try {
+            loadObjectFromFile(fileName);
+            rearrangeData(Comparator.comparingDouble(Student::getAverage));
+            printResult();
+        } catch (FileNotFoundException | ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
     public void rearrangeData(Comparator<Student> comparator) {
         Set<String> keys = studentInfo.keySet();
         keys.stream().map(studentInfo::get)
@@ -47,17 +60,5 @@ public class StudentOutput extends AbstractOutput implements ObjectLoader {
                     Student data = datas.get(num-1);
                     System.out.println(data.sortFormat(num));
                 });
-    }
-
-    public void run() {
-        try {
-            loadObjectFromFile(fileName);
-            rearrangeData(Comparator.comparingDouble(Student::getAverage));
-            printResult();
-        } catch (FileNotFoundException | ClassNotFoundException e) {
-            System.out.println(e.getMessage());
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
     }
 }

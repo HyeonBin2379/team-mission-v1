@@ -25,6 +25,7 @@ public class SortedStudent extends AbstractOutput implements ObjectWriter {
         this.outputFile = outputFile;
     }
 
+    @Override
     public void run() {
         try {
             loadObjectFromFile(inputFile);

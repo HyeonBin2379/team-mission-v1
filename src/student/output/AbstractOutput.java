@@ -30,4 +30,6 @@ public abstract class AbstractOutput implements ObjectLoader, Reporter {
 
     @Override
     public abstract void printResult();
+
+    public abstract void run();
 }
