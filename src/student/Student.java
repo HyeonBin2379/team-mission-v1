@@ -1,10 +1,13 @@
 package student;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Student implements Serializable {
     // 요구사항에 맞게 student.Student 클래스를 구현
+    @Serial
     private static final long serialVersionUID = 1L;
 
     private final String name;
@@ -15,7 +18,10 @@ public class Student implements Serializable {
 
     public Student(String name, List<String> record) {
         this.name = name;
-        this.record = record.stream().map(Integer::parseInt).toList();
+        validateRecord(record);
+        this.record = record.stream()
+                .map(Integer::parseInt)
+                .collect(Collectors.toList());
     }
     private void validateRecord(List<String> record) {
         if (record.stream().anyMatch(score -> score.isEmpty() || !score.matches("[0-9]*$"))) {
@@ -31,16 +37,8 @@ public class Student implements Serializable {
         return record;
     }
 
-    public int getTotal() {
-        return total;
-    }
-
     public double getAverage() {
         return average;
-    }
-
-    public String getGrade() {
-        return grade;
     }
 
     public void setTotal() {
@@ -67,11 +65,6 @@ public class Student implements Serializable {
         }
     }
 
-    @Override
-    public String toString() {
-        return String.format("%s (총점=%d, 평균=%.1f, 학점=%s)", name, total, average, grade);
-    }
-
     public String sortFormat(int number) {
         String resultFormat = """
                     %d) %s
@@ -79,5 +72,10 @@ public class Student implements Serializable {
                         총점: %d, 평균: %.1f, 학점: %s
                     """;
         return String.format(resultFormat, number, name, record, total, average, grade);
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s (총점=%d, 평균=%.1f, 학점=%s)", name, total, average, grade);
     }
 }

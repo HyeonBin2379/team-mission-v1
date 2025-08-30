@@ -14,66 +14,61 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class StudentOutput {
+public class StudentOutput extends AbstractOutput implements Input {
 
+    private HashMap<String, Student> studentInfo;
+    private List<Student> datas;
+    private List<String> names;
     private final String fileName;
 
     public StudentOutput(String fileName) {
+        this.studentInfo = new HashMap<>();
+        this.datas = new ArrayList<>();
+        this.names = new ArrayList<>();
         this.fileName = fileName;
+    }
+
+    @Override
+    public void loadObjectFromFile(String fileName) throws IOException, ClassNotFoundException {
+        Path path = Paths.get(fileName);
+        try (ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(path))) {
+            this.studentInfo = (HashMap<String, Student>) ois.readObject();
+        }
+    }
+
+    public void rearrangeData(Comparator<Student> comparator) {
+        Set<String> keys = studentInfo.keySet();
+
+        keys.stream()
+                .map(key -> studentInfo.get(key))
+                .sorted(comparator)
+                .forEach(student -> {
+                    names.add(student.getName());
+                    datas.add(student);
+                });
+        studentInfo = (HashMap<String, Student>) IntStream.range(0, datas.size())
+                .boxed()
+                .collect(Collectors.toMap(names::get, datas::get));
+    }
+
+    @Override
+    public void printResult() {
+        System.out.println("[평균 오름차순 성적표]");
+        IntStream.range(0, datas.size()).forEach(idx -> {
+            Student data = datas.get(idx);
+            System.out.println(data.sortFormat(idx+1));
+        });
     }
 
     public void run() {
         try {
-            InnerClass innerClass = new InnerClass();
-            innerClass.loadObjectFromFile(fileName);
-            innerClass.rearrangeData(Comparator.comparingDouble(Student::getAverage));
-            innerClass.printResult();
+            loadObjectFromFile(fileName);
+            rearrangeData(Comparator.comparingDouble(Student::getAverage));
+            printResult();
         } catch (FileNotFoundException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
         } catch (IOException e) {
             System.out.println(e.getMessage());
-        }
-    }
-
-    private class InnerClass implements Input, Printable {
-
-        private HashMap<String, Student> studentInfo;
-        private final List<Student> datas;
-        private final List<String> names;
-
-        public InnerClass() {
-            this.datas = new ArrayList<>();
-            this.names = new ArrayList<>();
-        }
-
-        @Override
-        public void loadObjectFromFile(String fileName) throws IOException, ClassNotFoundException {
-            Path path = Paths.get(fileName);
-            ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(path));
-            studentInfo = (HashMap<String, Student>) ois.readObject();
-        }
-
-        @Override
-        public void printResult() {
-            System.out.println("[평균 오름차순 성적표]");
-            IntStream.range(0, datas.size()).forEach(idx -> {
-                Student data = datas.get(idx);
-                System.out.println(data.sortFormat(idx+1));
-            });
-        }
-
-        public void rearrangeData(Comparator<Student> comparator) {
-            Set<String> keys = studentInfo.keySet();
-            keys.stream()
-                    .map(key -> studentInfo.get(key))
-                    .sorted(comparator)
-                    .forEach(student -> {
-                        names.add(student.getName());
-                        datas.add(student);
-                    });
-            studentInfo = (HashMap<String, Student>) IntStream.range(0, datas.size())
-                    .boxed()
-                    .collect(Collectors.toMap(names::get, datas::get));
         }
     }
 }
