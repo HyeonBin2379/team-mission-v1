@@ -9,7 +9,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Comparator;
 import java.util.TreeSet;
-import student.Student;
+import student.domain.Student;
 import student.interfaces.ObjectWriter;
 
 public class SortedStudent extends AbstractOutput implements ObjectWriter {
@@ -32,9 +32,9 @@ public class SortedStudent extends AbstractOutput implements ObjectWriter {
             printResult();
             outputObject(outputFile);
         } catch (FileNotFoundException | ClassNotFoundException e) {
-            System.out.println(e.getMessage());
+            System.out.println("[오류] " + e.getMessage());
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("[오류] " + e.getClass() + " " + e.getMessage());
         }
     }
 
@@ -59,7 +59,7 @@ public class SortedStudent extends AbstractOutput implements ObjectWriter {
 
     @Override
     public void outputObject(String fileName) throws IOException {
-        Path path = Paths.get(fileName);
+        Path path = Paths.get("C:/Temp/" + fileName);
         try (ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(path))) {
             oos.writeObject(sortedInfo);
         }

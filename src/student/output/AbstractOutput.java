@@ -6,7 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
-import student.Student;
+import student.domain.Student;
 import student.interfaces.ObjectLoader;
 import student.interfaces.Reporter;
 
@@ -22,7 +22,7 @@ public abstract class AbstractOutput implements ObjectLoader, Reporter {
 
     @Override
     public void loadObjectFromFile(String fileName) throws IOException, ClassNotFoundException {
-        Path path = Paths.get(fileName);
+        Path path = Paths.get("C:/Temp/" + fileName);
         try (ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(path))) {
             studentInfo = (HashMap<String, Student>) ois.readObject();
         }

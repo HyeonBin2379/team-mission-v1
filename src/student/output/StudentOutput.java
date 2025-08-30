@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import student.Student;
+import student.domain.Student;
 import student.interfaces.ObjectLoader;
 
 public class StudentOutput extends AbstractOutput implements ObjectLoader {
@@ -41,10 +41,12 @@ public class StudentOutput extends AbstractOutput implements ObjectLoader {
     @Override
     public void printResult() {
         System.out.println("[평균 오름차순 성적표]");
-        IntStream.range(0, datas.size()).forEach(idx -> {
-            Student data = datas.get(idx);
-            System.out.println(data.sortFormat(idx+1));
-        });
+        IntStream.rangeClosed(1, datas.size())
+                .limit(TOP_COUNT)
+                .forEach(num -> {
+                    Student data = datas.get(num-1);
+                    System.out.println(data.sortFormat(num));
+                });
     }
 
     public void run() {

@@ -1,4 +1,4 @@
-package student;
+package student.domain;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Student implements Serializable {
-    // 요구사항에 맞게 student.Student 클래스를 구현
+    // 요구사항에 맞게 student.domain.Student 클래스를 구현
     @Serial
     private static final long serialVersionUID = 1L;
 
@@ -16,7 +16,7 @@ public class Student implements Serializable {
     private double average;
     private String grade;
 
-    public Student(String name, List<String> record) {
+    public Student(String name, List<String> record) throws IllegalArgumentException {
         this.name = name;
         validateRecord(record);
         this.record = record.stream()

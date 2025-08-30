@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import student.Student;
+import student.domain.Student;
 import student.interfaces.Reporter;
 
 public class StudentInput extends AbstractInput implements Reporter {
@@ -30,14 +30,8 @@ public class StudentInput extends AbstractInput implements Reporter {
                     exitInput();
                     break;
                 }
-                List<String> record = new ArrayList<>();
-                for (String subject : subjects) {
-                    System.out.print(subject);
-                    String score = br.readLine();
-                    record.add(score);
-                }
-                checkKeyAndInputData(studentName, new Student(studentName, record));
-            } catch (IOException e) {
+                inputScore(studentName);
+            } catch (IOException | IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -53,25 +47,14 @@ public class StudentInput extends AbstractInput implements Reporter {
         }
     }
 
-    public void checkKeyAndInputData(String key, Student value) throws IOException {
-        if (key.trim().isEmpty() || key.contains(" ")) {
-            throw new IOException("[오류] 이름이 빈 문자열이거나 공백이 있습니다.");
+    public void inputScore(String studentName) throws IOException, IllegalArgumentException {
+        List<String> record = new ArrayList<>();
+        for (String subject : subjects) {
+            System.out.print(subject);
+            String score = br.readLine();
+            record.add(score);
         }
-        if (studentInfo.containsKey(key)) {
-            throw new IOException("[오류] 이미 존재하는 이름입니다. 다른 이름을 입력하세요.");
-        }
-        List<Integer> record = value.getRecord();
-        if (record.stream().anyMatch(score -> score < 0 || score > 100)) {
-            throw new IOException("[오류] 가능한 점수의 범위는 0~100입니다.");
-        }
-        insertEntry(key, value);
-    }
-    private void insertEntry(String key, Student value) {
-        value.setTotal();
-        value.setAverage();
-        value.setGrade();
-        studentInfo.put(key, value);
-        System.out.printf("=> 저장됨: %s\n\n", value);
+        checkKeyAndInputData(studentName, new Student(studentName, record));
     }
 
     public void exitInput() throws IOException {
