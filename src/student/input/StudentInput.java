@@ -10,7 +10,7 @@ import java.util.List;
 import student.domain.Student;
 import student.interfaces.Reporter;
 
-public class StudentInput extends AbstractInput implements Reporter {
+public class StudentInput extends AbstractStudentInput implements Reporter {
 
     private final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     private final List<String> subjects = Arrays.asList("국어: ", "영어: ", "수학: ", "과학: ");

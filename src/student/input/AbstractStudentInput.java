@@ -13,12 +13,13 @@ import student.domain.Student;
 import student.interfaces.Checker;
 import student.interfaces.ObjectWriter;
 
-public abstract class AbstractInput implements Checker, ObjectWriter {
+// 콘솔창으로 입력받은 학생별 성적을 직렬화하여 파일로 내보냄
+public abstract class AbstractStudentInput implements Checker, ObjectWriter {
 
     protected final String fileName;
     protected final HashMap<String, Student> studentInfo;
 
-    public AbstractInput(String fileName) {
+    public AbstractStudentInput(String fileName) {
         this.fileName = fileName;
         this.studentInfo = new HashMap<>();
     }

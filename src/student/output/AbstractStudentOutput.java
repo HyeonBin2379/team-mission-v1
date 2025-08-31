@@ -10,13 +10,14 @@ import student.domain.Student;
 import student.interfaces.ObjectLoader;
 import student.interfaces.Reporter;
 
-public abstract class AbstractOutput implements ObjectLoader, Reporter {
+// 직렬화한 학생 성적 정보를 읽어온 후 출력
+public abstract class AbstractStudentOutput implements ObjectLoader, Reporter {
 
     protected static final int TOP_COUNT = 10;
 
     protected HashMap<String, Student> studentInfo;
 
-    public AbstractOutput() {
+    public AbstractStudentOutput() {
         this.studentInfo = new HashMap<>();
     }
 

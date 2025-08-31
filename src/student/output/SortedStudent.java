@@ -12,7 +12,8 @@ import java.util.TreeSet;
 import student.domain.Student;
 import student.interfaces.ObjectWriter;
 
-public class SortedStudent extends AbstractOutput implements ObjectWriter {
+// 직렬화한 학생 정보를 읽어와 과목별 점수의 평균을 기준으로 정렬하고, 그 결과를 직렬화하여 저장
+public class SortedStudent extends AbstractStudentOutput implements ObjectWriter {
 
     private final String inputFile;
     private final String outputFile;

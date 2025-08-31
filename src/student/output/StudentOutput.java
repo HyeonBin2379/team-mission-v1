@@ -12,7 +12,7 @@ import java.util.stream.IntStream;
 import student.domain.Student;
 import student.interfaces.ObjectLoader;
 
-public class StudentOutput extends AbstractOutput implements ObjectLoader {
+public class StudentOutput extends AbstractStudentOutput implements ObjectLoader {
 
     private final List<Student> datas;
     private final List<String> names;
