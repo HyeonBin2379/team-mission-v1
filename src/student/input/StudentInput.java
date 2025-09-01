@@ -16,9 +16,11 @@ public class StudentInput extends AbstractStudentInput implements Reporter {
         super(fileName);
     }
 
+    // 학생데이터 입력 전 시작 단계
     public void readyToInput(String fileName) {
         System.out.println("[학생 성적 입력 프로그램]");
         try {
+            // student.dat 파일 불러오기 및 학생 성적 입력방법 안내
             loadCheck(fileName);
             printUsage();
         } catch (FileNotFoundException e) {
@@ -26,6 +28,7 @@ public class StudentInput extends AbstractStudentInput implements Reporter {
         }
     }
 
+    // 학생정보 입력 단계
     public void input(String studentName) throws IOException, IllegalArgumentException {
         List<String> record = new ArrayList<>();
         for (String subject : subjects) {
@@ -36,6 +39,7 @@ public class StudentInput extends AbstractStudentInput implements Reporter {
         checkKeyAndInputData(studentName, new Student(studentName, record));
     }
 
+    // 입력 종료 단계
     public void exitInput() throws IOException {
         System.out.println("exit\n입력을 종료합니다.");
         outputObject(fileName);

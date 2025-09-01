@@ -46,6 +46,7 @@ public abstract class AbstractStudentInput implements Checker, ObjectLoader, Obj
         studentInfo = (HashMap<String, Student>) ois.readObject();
     }
 
+    // 입력된 학생명 및 점수 유효성 검사
     @Override
     public void checkKeyAndInputData(String key, Student value) throws IOException {
         // 학생 이름 유효성 검사
@@ -64,6 +65,7 @@ public abstract class AbstractStudentInput implements Checker, ObjectLoader, Obj
         if (record.stream().anyMatch(score -> score < 0 || score > 100)) {
             throw new IOException("[오류] 가능한 점수의 범위는 0~100입니다.\n");
         }
+        // 이름과 점수 모두 유효하면 HashMap에 저장
         insertData(key, value);
     }
     private void insertData(String key, Student value) {
