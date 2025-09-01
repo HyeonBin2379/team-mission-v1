@@ -54,7 +54,7 @@ public class SortedStudent extends AbstractStudentOutput implements ObjectWriter
         try (ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(path))) {
             oos.writeObject(sortedInfo);
         }
-        System.out.printf("\n결과 파일: %s\n", path);
+        System.out.printf("\n결과 파일: ./%s\n", path);
         System.out.println("[완료] 정렬된 결과를 파일로 저장했습니다.");
     }
 
