@@ -15,6 +15,8 @@ import student.interfaces.ObjectWriter;
 // 직렬화한 학생 정보를 읽어와 과목별 점수의 평균을 기준으로 정렬하고, 그 결과를 직렬화하여 저장
 public class SortedStudent extends AbstractStudentOutput implements ObjectWriter {
 
+    private static final int LIMIT_COUNT = 10;
+
     private final String inputFile;
     private final String outputFile;
 
@@ -39,9 +41,10 @@ public class SortedStudent extends AbstractStudentOutput implements ObjectWriter
                 정렬 규칙: 평균 ASC, 평균 동률이면 이름 사전순 ASC
         
                 저장 대상(미리보기 상위 %2$d명)
-                """, Math.min(sortedInfo.size(), topCount), topCount);
+                """, Math.min(sortedInfo.size(), LIMIT_COUNT), LIMIT_COUNT);
+        // 정렬결과 출력 시, 최대 10명의 학생들의 성적을 출력
         sortedInfo.stream()
-                .limit(topCount)
+                .limit(LIMIT_COUNT)
                 .forEach(student -> System.out.printf("- %s (평균 %.1f)\n", student.getName(), student.getAverage()));
     }
 
