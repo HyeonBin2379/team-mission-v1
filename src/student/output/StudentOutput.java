@@ -26,19 +26,6 @@ public class StudentOutput extends AbstractStudentOutput implements ObjectLoader
         this.fileName = fileName;
     }
 
-    @Override
-    public void run() {
-        try {
-            loadObjectFromFile(fileName);
-            rearrangeData(Comparator.comparingDouble(Student::getAverage));
-            printResult();
-        } catch (FileNotFoundException | ClassNotFoundException e) {
-            System.out.println(e.getMessage());
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
     public void rearrangeData(Comparator<Student> comparator) {
         Set<String> keys = studentInfo.keySet();
         keys.stream().map(studentInfo::get)
@@ -55,10 +42,23 @@ public class StudentOutput extends AbstractStudentOutput implements ObjectLoader
     public void printResult() {
         System.out.println("[평균 오름차순 성적표]");
         IntStream.rangeClosed(1, datas.size())
-                .limit(TOP_COUNT)
+                .limit(topCount)
                 .forEach(num -> {
                     Student data = datas.get(num-1);
                     System.out.println(data.sortFormat(num));
                 });
+    }
+
+    @Override
+    public void run() {
+        try {
+            loadObjectFromFile(fileName);
+            rearrangeData(Comparator.comparingDouble(Student::getAverage));
+            printResult();
+        } catch (FileNotFoundException | ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

@@ -69,4 +69,6 @@ public abstract class AbstractStudentInput implements Checker, ObjectWriter {
         }
         System.out.printf("[완료] %d명의 정보가 %s에 저장되었습니다.\n\n", studentInfo.size(), fileName);
     }
+
+    public abstract void run();
 }

@@ -19,24 +19,6 @@ public class StudentInput extends AbstractStudentInput implements Reporter {
         super(fileName);
     }
 
-    public void run() {
-        readyToInput(fileName);
-
-        while (true) {
-            try {
-                System.out.print("이름: ");
-                String studentName = br.readLine();
-                if (studentName.equals("^^")) {
-                    exitInput();
-                    break;
-                }
-                inputScore(studentName);
-            } catch (IOException | IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-    }
-
     public void readyToInput(String fileName) {
         System.out.println("[학생 성적 입력 프로그램]");
         try {
@@ -47,7 +29,7 @@ public class StudentInput extends AbstractStudentInput implements Reporter {
         }
     }
 
-    public void inputScore(String studentName) throws IOException, IllegalArgumentException {
+    public void input(String studentName) throws IOException, IllegalArgumentException {
         List<String> record = new ArrayList<>();
         for (String subject : subjects) {
             System.out.print(subject);
@@ -65,5 +47,24 @@ public class StudentInput extends AbstractStudentInput implements Reporter {
     @Override
     public void printResult() {
         System.out.println("exit\n입력을 종료합니다.");
+    }
+
+    @Override
+    public void run() {
+        readyToInput(fileName);
+
+        while (true) {
+            try {
+                System.out.print("이름: ");
+                String studentName = br.readLine();
+                if (studentName.equals("^^")) {
+                    exitInput();
+                    break;
+                }
+                input(studentName);
+            } catch (IOException | IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
     }
 }

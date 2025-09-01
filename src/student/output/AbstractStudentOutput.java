@@ -13,7 +13,7 @@ import student.interfaces.Reporter;
 // 직렬화한 학생 성적 정보를 읽어온 후 출력
 public abstract class AbstractStudentOutput implements ObjectLoader, Reporter {
 
-    protected static final int TOP_COUNT = 10;
+    protected static int topCount = 10;     // 최대 n명까지의 학생들까지 출력
 
     protected HashMap<String, Student> studentInfo;
 
