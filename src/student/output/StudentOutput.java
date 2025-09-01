@@ -34,7 +34,10 @@ public class StudentOutput extends AbstractStudentOutput implements ObjectLoader
                     names.add(student.getName());
                     datas.add(student);
                 });
-        studentInfo = (HashMap<String, Student>) IntStream.range(0, datas.size()).boxed()
+        // 평균 기준 오름차순 정렬한 학생들 중, 최대 n명의 학생을 해시맵에 저장
+        studentInfo = (HashMap<String, Student>) IntStream.range(0, datas.size())
+                .boxed()
+                .limit(topCount)
                 .collect(Collectors.toMap(names::get, datas::get));
     }
 

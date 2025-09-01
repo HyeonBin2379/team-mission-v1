@@ -24,7 +24,7 @@ public class Student implements Serializable {
                 .collect(Collectors.toList());
     }
     private void validateRecord(List<String> record) {
-        if (record.stream().anyMatch(score -> score.isEmpty() || !score.matches("[0-9]*$"))) {
+        if (record.stream().anyMatch(score -> score.isEmpty() || !score.matches("[0-9]+$"))) {
             throw new IllegalArgumentException("[오류] 정수로 변환할 수 없는 점수입니다.");
         }
     }

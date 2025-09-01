@@ -47,11 +47,11 @@ public class SortedStudent extends AbstractStudentOutput implements ObjectWriter
 
     @Override
     public void outputObject(String fileName) throws IOException {
-        Path path = Paths.get("C:/Temp/" + fileName);
+        Path path = Paths.get(fileName);
         try (ObjectOutputStream oos = new ObjectOutputStream(Files.newOutputStream(path))) {
             oos.writeObject(sortedInfo);
         }
-        System.out.printf("\n결과 파일: ./%s\n", fileName);
+        System.out.printf("\n결과 파일: %s\n", path);
         System.out.println("[완료] 정렬된 결과를 파일로 저장했습니다.");
     }
 
@@ -69,6 +69,7 @@ public class SortedStudent extends AbstractStudentOutput implements ObjectWriter
         }
     }
 
+    // Serialized 인터페이스를 구현한 Comparator 객체를 사용해야 TreeSet인 sortedeInfo 직렬화 가능
     static class StudentComparator implements Comparator<Student>, Serializable {
 
         @Override
