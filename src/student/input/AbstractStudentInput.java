@@ -35,6 +35,7 @@ public abstract class AbstractStudentInput implements Checker, ObjectLoader, Obj
             // student.dat 파일이 이미 존재하면 기존 파일을 로드
             loadObjectFromFile(file.getName());
         } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
             throw new FileNotFoundException("[오류] 파일의 데이터를 직렬화할 수 없습니다.");
         }
     }
@@ -42,7 +43,8 @@ public abstract class AbstractStudentInput implements Checker, ObjectLoader, Obj
     // 기존 파일 로드
     @Override
     public void loadObjectFromFile(String fileName) throws IOException, ClassNotFoundException {
-        ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fileName));
+        Path path = Paths.get("C:/Temp/" + fileName);
+        ObjectInputStream ois = new ObjectInputStream(Files.newInputStream(path));
         studentInfo = (HashMap<String, Student>) ois.readObject();
     }
 
