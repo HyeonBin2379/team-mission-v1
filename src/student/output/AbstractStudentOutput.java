@@ -31,5 +31,6 @@ public abstract class AbstractStudentOutput implements ObjectLoader, Reporter {
     @Override
     public abstract void printResult();
 
+    // StudentOutput과 SortedStudent의 코드에서 변동
     public abstract void run();
 }
