@@ -37,7 +37,7 @@ public abstract class AbstractStudentInput implements Checker, ObjectLoader, Obj
                 }
                 input(studentName);
             } catch (IOException | IllegalArgumentException e) {
-                System.out.println(e.getMessage());
+                System.err.println(e.getMessage());
             }
         }
     }
@@ -49,7 +49,7 @@ public abstract class AbstractStudentInput implements Checker, ObjectLoader, Obj
             loadCheck(fileName);
             printUsage();
         } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         }
     }
 

@@ -28,6 +28,21 @@ public class SortedStudent extends AbstractStudentOutput implements ObjectWriter
         this.outputFile = outputFile;
     }
 
+    @Override
+    public void run() {
+        try {
+            loadObjectFromFile(inputFile);
+            createTreeSet(new StudentComparator());
+            printResult();
+            outputObject(outputFile);
+        } catch (FileNotFoundException | ClassNotFoundException e) {
+            System.err.println("[오류] " + e.getMessage());
+        } catch (IOException e) {
+            System.err.println("[오류] " + e.getClass() + " " + e.getMessage());
+        }
+    }
+
+    // SortedStudent에서만 사용되는 메서드는 SortedStudent에서 구현
     public void createTreeSet(Comparator<Student> comparator) {
         sortedInfo = new TreeSet<>(comparator);
         sortedInfo.addAll(studentInfo.values());
@@ -42,7 +57,7 @@ public class SortedStudent extends AbstractStudentOutput implements ObjectWriter
         
                 저장 대상(미리보기 상위 %2$d명)
                 """, Math.min(sortedInfo.size(), LIMIT_COUNT), LIMIT_COUNT);
-        // 정렬결과 출력 시, 최대 10명의 학생들의 성적을 출력
+        // 정렬결과 출력 시, 최대 n명의 학생들의 성적을 출력
         sortedInfo.stream()
                 .limit(LIMIT_COUNT)
                 .forEach(student -> System.out.printf("- %s (평균 %.1f)\n", student.getName(), student.getAverage()));
@@ -56,20 +71,6 @@ public class SortedStudent extends AbstractStudentOutput implements ObjectWriter
         }
         System.out.printf("\n결과 파일: ./%s\n", path);
         System.out.println("[완료] 정렬된 결과를 파일로 저장했습니다.");
-    }
-
-    @Override
-    public void run() {
-        try {
-            loadObjectFromFile(inputFile);
-            createTreeSet(new StudentComparator());
-            printResult();
-            outputObject(outputFile);
-        } catch (FileNotFoundException | ClassNotFoundException e) {
-            System.out.println("[오류] " + e.getMessage());
-        } catch (IOException e) {
-            System.out.println("[오류] " + e.getClass() + " " + e.getMessage());
-        }
     }
 
     // Serialized 인터페이스를 구현한 Comparator 객체를 사용해야 TreeSet인 sortedeInfo 직렬화 가능

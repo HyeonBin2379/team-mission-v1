@@ -43,21 +43,21 @@ public class StudentInput extends AbstractStudentInput {
     }
 
     @Override
-    public void checkKeyAndInputData(String key, Student value) throws IOException {
+    public void checkKeyAndInputData(String key, Student value) {
         // 학생 이름 유효성 검사
         if (key.trim().isEmpty() || key.contains(" ")) {
-            throw new IOException("[오류] 이름이 빈 문자열이거나 공백이 있습니다.\n");
+            throw new IllegalArgumentException("[오류] 이름이 빈 문자열이거나 공백이 있습니다.\n");
         }
         if (!key.matches("[a-zA-Z가-힣]+$")) {
-            throw new IOException("[오류] 이름은 한글과 영문으로만 입력 가능합니다.\n");
+            throw new IllegalArgumentException("[오류] 이름은 한글과 영문으로만 입력 가능합니다.\n");
         }
         if (studentInfo.containsKey(key)) {
-            throw new IOException("[오류] 이미 존재하는 이름입니다. 다른 이름을 입력하세요.\n");
+            throw new IllegalArgumentException("[오류] 이미 존재하는 이름입니다. 다른 이름을 입력하세요.\n");
         }
         // 학생 점수 검사
         List<Integer> record = value.getRecord();
         if (record.stream().anyMatch(score -> score < 0 || score > 100)) {
-            throw new IOException("[오류] 가능한 점수의 범위는 0~100입니다.\n");
+            throw new IllegalArgumentException("[오류] 가능한 점수의 범위는 0~100입니다.\n");
         }
         // 이름과 점수 모두 유효하면 HashMap에 저장
         insertData(key, value);

@@ -9,9 +9,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import student.domain.Student;
-import student.interfaces.ObjectLoader;
 
-public class StudentOutput extends AbstractStudentOutput implements ObjectLoader {
+public class StudentOutput extends AbstractStudentOutput {
 
     private final List<Student> datas;
     private final List<String> names;
@@ -33,7 +32,7 @@ public class StudentOutput extends AbstractStudentOutput implements ObjectLoader
                     names.add(student.getName());
                     datas.add(student);
                 });
-        // 평균 기준 오름차순 정렬한 학생들을 출력
+        // 평균 기준 오름차순 정렬한 결과를 다시 해시맵에 저장
         studentInfo = (HashMap<String, Student>) IntStream.range(0, datas.size())
                 .boxed()
                 .collect(Collectors.toMap(names::get, datas::get));
@@ -45,7 +44,7 @@ public class StudentOutput extends AbstractStudentOutput implements ObjectLoader
         IntStream.rangeClosed(1, datas.size())
                 .forEach(num -> {
                     Student data = datas.get(num-1);
-                    System.out.println(data.sortFormat(num));
+                    System.out.println(data.outputFormat(num));
                 });
     }
 
@@ -58,7 +57,7 @@ public class StudentOutput extends AbstractStudentOutput implements ObjectLoader
         } catch (FileNotFoundException | ClassNotFoundException e) {
             System.out.println(e.getMessage());
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.out.println(e.getClass() + ": " + e.getMessage());
         }
     }
 }

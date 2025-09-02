@@ -65,7 +65,7 @@ public class Student implements Serializable {
         }
     }
 
-    public String sortFormat(int number) {
+    public String outputFormat(int number) {
         String resultFormat = """
                     %d) %s
                         점수: %s
