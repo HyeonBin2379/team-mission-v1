@@ -182,8 +182,7 @@ public class Main {
 
 **Checker**
 
-- 파일의 유무를 확인하는 역할 수행
-- 입력한 학생 이름, 점수에 관한 유효성 검사를 수행
+- 지정한 이름의 파일이 있는지 확인하거나, 입력한 학생 이름 및 점수에 관한 유효성 검사를 수행하는 역할
 
 ```java
 // 입력한 데이터에 관한 유효성 검사를 수행
@@ -197,7 +196,7 @@ public interface Checker {
 
 **ObjectLoader**
 
-- `student.dat` 파일에 저장된 학생 성적 정보 로드
+- 파일에 해시맵 형태로 저장된 학생 점수를 불러오는 역할
 
 ```java
 // 객체 역직렬화
@@ -209,7 +208,7 @@ public interface ObjectLoader {
 
 **ObjectWriter**
 
-- `student.dat` 또는 `orderByAvg.dat` 파일에 학생 성적 정보 저장
+- `student.dat` 또는 `orderByAvg.dat` 파일에 학생의 점수를 저장하는 역할
 
 ```java
 // 객체 직렬화
@@ -221,7 +220,7 @@ public interface ObjectWriter {
 
 **Reporter**
 
-- 입력 시 안내사항 또는 작업 수행 결과 출력
+- 입력 시 안내사항이나 작업 수행 결과를 콘솔창에 출력하는 역할
 
 ```java
 // 콘솔창에 결과를 출력
@@ -384,7 +383,7 @@ public class StudentInput extends AbstractStudentInput {
     public void loadCheck(String fileName) throws FileNotFoundException {
         try {
             File file = new File("C:/Temp/" + fileName);
-            // student.dat 파일이 존재하지 않으면 신규 생성
+            // student.dat 파일이 존재하지 않으면 새로 생성
             if (file.createNewFile()) {
                 studentInfo = new HashMap<>();
                 return;
@@ -408,6 +407,7 @@ public class StudentInput extends AbstractStudentInput {
         System.out.printf("[완료] %d명의 정보가 %s에 저장되었습니다.\n\n", studentInfo.size(), fileName);
     }
 
+    // 입력한 학생 이름, 과목별 점수에 관한 유효성 검사
     @Override
     public void checkKeyAndInputData(String key, Student value) {
         // 학생 이름 유효성 검사
@@ -429,6 +429,7 @@ public class StudentInput extends AbstractStudentInput {
         insertData(key, value);
     }
 
+    // 유효성 검사 통과 시 맵에 데이터를 저장
     private void insertData(String key, Student value) {
         value.setTotal();
         value.setAverage();
@@ -438,6 +439,7 @@ public class StudentInput extends AbstractStudentInput {
         System.out.printf("=> 저장됨: %s\n\n", value);
     }
 
+    // 객체를 직렬화하여 파일에 저장
     @Override
     public void outputObject(String fileName) throws IOException {
         Path path = Paths.get("C:/Temp/" + fileName);
