@@ -1,17 +1,12 @@
----
-title: "1차 팀미션 구현 내용 정리(이현빈)"
-excerpt: 학생 성적 입력, 정렬, 출력 기능까지 구현했습니다.
-date: 2025-09-01
-author: hyeonbin-lee
-author_profile: true
-layout: single
----
+# Team Mission v.1 - 학생 성적 프로그램
 
 ## 1. 클래스 구조 설명
 
 ![img.png](img.png)
 
 ### 인터페이스
+
+- 메서드의 중복을 줄이기 위해 인터페이스를 활용
 - `Checker`: 기존 `student.dat` 파일의 유무 확인 및 입력 데이터의 유효성 확인
 - `ObjectLoader`: `student.dat` 파일에 저장된 바이트코드를 역직렬화하여 `Student` 객체로 변환
 - `ObjectWriter`: `Student` 객체를 직렬화하여 `student.dat` 파일에 저장
@@ -19,19 +14,21 @@ layout: single
 
 ### 추상 클래스
 
-- 메서드의 중복을 줄이기 위해 인터페이스를 활용
-- 여러 인터페이스를 조합하여 `StudentInput`, `StudentOutput`, `SortedStudent` 클래스의 대략적인 골격을 제공
+- 필요한 인터페이스를 여러 개 상속받아 `StudentInput`, `StudentOutput`, `SortedStudent` 클래스의 기본 틀을 제공
 
 **AbstractStudentInput**
+
 - `StudentInput` 클래스의 기본적인 밑바탕이 되는 추상 메서드
 - `ObjectLoader`, `ObjectWriter`, `Checker`, `Reporter` 인터페이스를 사용하여 큰 틀에서의 `StudentInput`의 로직을 구현
-- 
+-
 
 **AbstractStudentOutput**
+
 - `StudentOutput`과 `SortedStudent`에서 공통적으로 사용하는 메서드를 정의
 - `OrderLoader`, `Reporter` 인터페이스의 메서드를 구현
 
 ### 주요 클래스
+
 - `Student` : 학생 이름 및 점수를 저장하는 객체(직렬화 가능)
 - `StudentInput` : 콘솔에서 학생 정보를 입력받고, 이를 직렬화하여 `student.dat` 파일에 저장
 - `StudentOutput` : `student.dat` 파일에서 학생 객체들을 읽어와 평균 기준 오름차순으로 정렬 후 콘솔창에서 출력
@@ -47,16 +44,13 @@ layout: single
 
 ![img_2.png](img_2.png)
 
-
 ### 2) StudentOutput에서 정렬 후 학생 점수 출력(콘솔창)
 
 ![img_3.png](img_3.png)
 
-
 ### 3) SortedStudent에서 정렬 후 orderByAvg.dat 파일에 저장
 
 ![img_4.png](img_4.png)
-
 
 ### 4) 기존 파일에 이어서 작성
 
@@ -70,44 +64,20 @@ layout: single
 
 ---
 
+## 사용한 주요 메서드
+
 - 과제 안내사항에 명시된 기본 기능을 수행하는 메서드 중 기능과 파라미터가 동일한 일부 메서드의 이름을 하나로 통일
-- 이에 따라, 일부 메서드 시그니처를 변경
-  (각각의 메서드는 클래스별로 정리)
-
-### StudentInput 클래스
-
-- `student.dat` 파일의 유무 확인 및 로드: `loadCheck(String)`
-  - 기존 파일을 로드할 때 `loadObjectFromFile(String)`의 메서드를 재사용
-- 사용법/입력 안내 출력용 메서드: `printUsage()`(파라미터 없음)
-- 학생 이름의 중복/점수의 유효성 검사 후 학생의 total/average/grade를 계산하여 맵에 저장: `checkKeyAndInputData(String, Student)`
-- Student 객체를 대상으로 직렬화 수행: `outputObject(String)`
-- **안내사항의 `saveData()`를 `outputObject(String)`로 대체**
-
-### StudentOutput 클래스
-
-- `student.dat` 파일의 데이터를 역직렬화하여 맵 불러오기: `AbstractStudentOutput`에서 구현한 `loadObjectFromFile(String)`를 사용
-- 평균 기준 정렬: `rearrangeData(Comparator<Student>)`
-- 정렬 결과를 출력: `printResult()`
-- **안내사항의 `printInfo()` 메서드의 이름을 `printResult()`로 변경**
-
-### SortedStudent 클래스
-
-- 역직렬화 수행: `loadObjectFromFile(String)`
-- TreeSet 생성 및 정렬 기준 설정(평균 기준 오름차순, 평균 동일할 시 이름을 사전순으로): `createTreeSet(Comparator<Student>)`
-- 정렬 결과 출력: `printResult()`
-- 직렬화 수행: `outputObject(String)`
-
-### 기타 메서드
-
-- 코드를 분리하여 가독성을 높이기 위해 메서드를 추가(해당 메서드에는 주석 표시)
-- 자세한 코드는 아래 링크에서 확인 가능
-  [깃허브 코드 저장소 링크](https://github.com/HyeonBin2379/team-mission-v1/tree/hyeonbin-lee/src/student)
+- 이에 따라, 일부 메서드 시그니처를 변경하여 구현
+  (중요한 메서드는 `StudentInput`, `StudentOutput`, `SortedStudent` 클래스에 각각 정리)
 
 ---
 
 ## 구현 코드
 
 ### Student 클래스
+
+- 학생의 이름과 과목(국어, 영어, 수학, 과학) 점수를 저장하고, 이에 대한 총점, 평균, 등급 정보를 제공
+- 직렬화하여 `student.dat` 파일에 저장 가능
 
 ```java
 public class Student implements Serializable {
@@ -128,6 +98,8 @@ public class Student implements Serializable {
                 .map(Integer::parseInt)
                 .collect(Collectors.toList());
     }
+
+    // 입력한 점수를 정수로 변환 가능한지 확인
     private void validateRecord(List<String> record) {
         if (record.stream().anyMatch(score -> score.isEmpty() || !score.matches("[0-9]+$"))) {
             throw new IllegalArgumentException("[오류] 정수로 변환할 수 없는 점수입니다.");
@@ -141,12 +113,12 @@ public class Student implements Serializable {
     public List<Integer> getRecord() {
         return record;
     }
-    
+
     public double getAverage() {
         return average;
     }
 
-    // 점수 총합, 평균, 등급 계산
+    // 계산한 점수의 총합, 평균, 등급을 필드에 저장
     public void setTotal() {
         this.total = record.stream()
                 .mapToInt(Integer::intValue)
@@ -174,10 +146,10 @@ public class Student implements Serializable {
     // 출력 형식 지정
     public String outputFormat(int number) {
         String resultFormat = """
-                    %d) %s
-                        점수: %s
-                        총점: %d, 평균: %.1f, 학점: %s
-                    """;
+                %d) %s
+                    점수: %s
+                    총점: %d, 평균: %.1f, 학점: %s
+                """;
         return String.format(resultFormat, number, name, record, total, average, grade);
     }
 
@@ -200,7 +172,7 @@ public class Main {
         studentInput.run();
         StudentOutput studentOutput = new StudentOutput("student.dat");
         studentOutput.run();
-        SortedStudent sortedStudent = new SortedStudent("student.dat","orderByAvg.dat");
+        SortedStudent sortedStudent = new SortedStudent("student.dat", "orderByAvg.dat");
         sortedStudent.run();
     }
 }
@@ -209,6 +181,9 @@ public class Main {
 ### 인터페이스
 
 **Checker**
+
+- 파일의 유무를 확인하는 역할 수행
+- 입력한 학생 이름, 점수에 관한 유효성 검사를 수행
 
 ```java
 // 입력한 데이터에 관한 유효성 검사를 수행
@@ -222,6 +197,8 @@ public interface Checker {
 
 **ObjectLoader**
 
+- `student.dat` 파일에 저장된 학생 성적 정보 로드
+
 ```java
 // 객체 역직렬화
 public interface ObjectLoader {
@@ -231,6 +208,8 @@ public interface ObjectLoader {
 ```
 
 **ObjectWriter**
+
+- `student.dat` 또는 `orderByAvg.dat` 파일에 학생 성적 정보 저장
 
 ```java
 // 객체 직렬화
@@ -242,107 +221,118 @@ public interface ObjectWriter {
 
 **Reporter**
 
+- 입력 시 안내사항 또는 작업 수행 결과 출력
+
 ```java
 // 콘솔창에 결과를 출력
 public interface Reporter {
 
     default void printUsage() {
         System.out.println("""
-            - 종료하려면 이름에 ^^ 를 입력하세요.
-            - 점수는 0~100 사이의 정수만 허용됩니다.
-            """);
+                - 종료하려면 이름에 ^^ 를 입력하세요.
+                - 점수는 0~100 사이의 정수만 허용됩니다.
+                """);
     }
 
     void printResult();
 }
 ```
 
-
 ### 추상 클래스
 
 **AbstractStudentInput**
 
-* `StudentInput` 클래스의 대략적인 로직을 구현
+* `StudentInput` 클래스의 전체적인 틀을 잡기 위한 추상 클래스
+* `입력 준비 단계 -> 입력 -> 입력 종료` 의 흐름으로 진행
+* 입력에 필요한 세부 단계는 추상 메서드로 정의하고 `StudentInput` 클래스에서 구현
 
 ```java
 // 콘솔창으로 입력받은 학생별 성적을 직렬화하여 파일로 내보냄
 public abstract class AbstractStudentInput implements Checker, ObjectLoader, ObjectWriter, Reporter {
 
-  private final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-  private final List<String> subjects = Arrays.asList("국어: ", "영어: ", "수학: ", "과학: ");
+    private final BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    private final List<String> subjects = Arrays.asList("국어: ", "영어: ", "수학: ", "과학: ");
 
-  protected final String fileName;
-  protected HashMap<String, Student> studentInfo;
+    // 입력, 출력에 관한 패키지 분리 -> input 패키지 외부에서는 접근 불가
+    protected final String fileName;
+    protected HashMap<String, Student> studentInfo;
 
-  public AbstractStudentInput(String fileName) {
-    this.fileName = fileName;
-  }
+    public AbstractStudentInput(String fileName) {
+        this.fileName = fileName;
+    }
 
-  public void run() {
-    readyToInput(fileName);
-    while (true) {
-      try {
-        System.out.print("이름: ");
-        String studentName = br.readLine();
-        if (studentName.equals("^^")) {
-          exitInput();
-          break;
+    public void run() {
+        readyToInput(fileName);
+        while (true) {
+            try {
+                // 이름 입력 단계  
+                System.out.print("이름: ");
+                String studentName = br.readLine();
+                if (studentName.equals("^^")) {
+                    exitInput();
+                    break;
+                }
+                // 점수 입력 단계
+                input(studentName);
+            } catch (IOException | IllegalArgumentException e) {
+                System.err.println(e.getMessage());
+            }
         }
-        input(studentName);
-      } catch (IOException | IllegalArgumentException e) {
-        System.out.println(e.getMessage());
-      }
     }
-  }
 
-  public void readyToInput(String fileName) {
-    System.out.println("[학생 성적 입력 프로그램]");
-    try {
-      // student.dat 파일 불러오기 및 학생 성적 입력방법 안내
-      loadCheck(fileName);
-      printUsage();
-    } catch (FileNotFoundException e) {
-      System.out.println(e.getMessage());
+    // 입력 준비 단계
+    public void readyToInput(String fileName) {
+        System.out.println("[학생 성적 입력 프로그램]");
+        try {
+            // student.dat 파일 불러오기 및 학생 성적 입력방법 안내
+            loadCheck(fileName);
+            printUsage();     // Reporter 인터페이스의 디폴트 메서드
+        } catch (FileNotFoundException e) {
+            System.err.println(e.getMessage());
+        }
     }
-  }
 
-  public void input(String studentName) throws IOException, IllegalArgumentException {
-    List<String> record = new ArrayList<>();
-    for (String subject : subjects) {
-      System.out.print(subject);
-      String score = br.readLine();
-      record.add(score);
+    // 학생 점수 입력
+    public void input(String studentName) throws IOException, IllegalArgumentException {
+        List<String> record = new ArrayList<>();
+        for (String subject : subjects) {
+            System.out.print(subject);
+            String score = br.readLine();
+            record.add(score);
+        }
+        checkKeyAndInputData(studentName, new Student(studentName, record));
     }
-    checkKeyAndInputData(studentName, new Student(studentName, record));
-  }
 
-  public void exitInput() throws IOException {
-    System.out.println("exit\n입력을 종료합니다.");
-    outputObject(fileName);
-    printResult();
-  }
+    // 입력 종료
+    public void exitInput() throws IOException {
+        System.out.println("exit\n입력을 종료합니다.");
+        outputObject(fileName);
+        printResult();
+    }
 
-  // 기존 파일 유무 확인 및 로드
-  @Override
-  public abstract void loadCheck(String fileName) throws FileNotFoundException;
+    // 기존 파일 유무 확인 및 로드
+    @Override
+    public abstract void loadCheck(String fileName) throws FileNotFoundException;
 
-  // 기존 파일 로드
-  @Override
-  public abstract void loadObjectFromFile(String fileName) throws IOException, ClassNotFoundException;
+    // 기존 파일 로드
+    @Override
+    public abstract void loadObjectFromFile(String fileName) throws IOException, ClassNotFoundException;
 
-  // 입력된 학생명 및 점수 유효성 검사
-  @Override
-  public abstract void checkKeyAndInputData(String key, Student value) throws IOException;
+    // 입력된 학생명 및 점수 유효성 검사
+    @Override
+    public abstract void checkKeyAndInputData(String key, Student value) throws IOException;
 
-  // 직렬화 수행
-  @Override
-  public abstract void outputObject(String fileName) throws IOException;
+    // 직렬화 수행
+    @Override
+    public abstract void outputObject(String fileName) throws IOException;
 }
 ```
 
 **AbstractStudentOutput**
 
-* `SortedStudent`, `StudentOutput` 클래스에서 공통으로 사용되는 기능을 추상 클래스로 분리
+* `SortedStudent`, `StudentOutput` 클래스에서 공통으로 사용되는 기능을 구현
+    * `loadObjectFromFile(String)` 메서드 구현
+* `SortedStudent`, `StudentOutput`의 전체 로직을 나타내는 `run()` 메서드는 추상메서드로 정의
 
 ```java
 public abstract class AbstractStudentOutput implements ObjectLoader, Reporter {
@@ -352,7 +342,7 @@ public abstract class AbstractStudentOutput implements ObjectLoader, Reporter {
     public AbstractStudentOutput() {
         this.studentInfo = new HashMap<>();
     }
-    
+
     // 파일 불러오기
     @Override
     public void loadObjectFromFile(String fileName) throws IOException, ClassNotFoundException {
@@ -372,13 +362,12 @@ public abstract class AbstractStudentOutput implements ObjectLoader, Reporter {
 }
 ```
 
-
 ### 구현 클래스
 
 **StudentInput**
 
 - `student.dat` 파일의 유무 확인 및 로드: `loadCheck(String)`
-  - 기존 파일을 로드할 때 `loadObjectFromFile(String)`의 메서드를 재사용
+    - 기존 파일을 로드할 때 `loadObjectFromFile(String)`의 메서드를 재사용
 - 사용법/입력 안내 출력용 메서드: `printUsage()`(파라미터 없음)
 - 학생 이름의 중복/점수의 유효성 검사 후 학생의 total/average/grade를 계산하여 맵에 저장: `checkKeyAndInputData(String, Student)`
 - Student 객체를 대상으로 직렬화 수행: `outputObject(String)`
@@ -439,6 +428,7 @@ public class StudentInput extends AbstractStudentInput {
         // 이름과 점수 모두 유효하면 HashMap에 저장
         insertData(key, value);
     }
+
     private void insertData(String key, Student value) {
         value.setTotal();
         value.setAverage();
@@ -461,7 +451,7 @@ public class StudentInput extends AbstractStudentInput {
 **StudentOutput**
 
 - `student.dat` 파일의 데이터를 역직렬화하여 맵 불러오기
-  - `AbstractStudentOutput`에서 구현한 `loadObjectFromFile(String)`를 사용
+    - `AbstractStudentOutput`에서 구현한 `loadObjectFromFile(String)`를 사용
 - 평균 기준 정렬: `rearrangeData(Comparator<Student>)`
 - 정렬 결과를 출력: `printResult()`
 - **안내사항의 `printInfo()` 메서드의 이름을 `printResult()`로 변경**
@@ -471,55 +461,55 @@ import java.util.ArrayList;
 
 public class StudentOutput extends AbstractStudentOutput {
 
-  private static final List<Student> datas = new ArrayList<>();
-  private static final List<String> names = new ArrayList<>();
+    private static final List<Student> datas = new ArrayList<>();
+    private static final List<String> names = new ArrayList<>();
 
-  private final String fileName;
+    private final String fileName;
 
-  public StudentOutput(String fileName) {
-    super();
-    this.fileName = fileName;
-  }
-
-  public void rearrangeData(Comparator<Student> comparator) {
-    studentInfo.keySet().stream()
-            .map(studentInfo::get)
-            .sorted(comparator)
-            .forEach(student -> {
-              names.add(student.getName());
-              datas.add(student);
-            });
-    // 평균 기준 오름차순 정렬한 학생들을 출력
-    studentInfo = (HashMap<String, Student>) IntStream.range(0, datas.size())
-            .boxed()
-            .collect(Collectors.toMap(names::get, datas::get));
-  }
-
-  @Override
-  public void printResult() {
-    System.out.println("[평균 오름차순 성적표]");
-    IntStream.rangeClosed(1, datas.size())
-            .forEach(num -> {
-              Student data = datas.get(num - 1);
-              System.out.println(data.outputFormat(num));
-            });
-  }
-
-  @Override
-  public void run() {
-    try {
-      loadObjectFromFile(fileName);
-      rearrangeData(Comparator.comparingDouble(Student::getAverage));
-      printResult();
-    } catch (FileNotFoundException | ClassNotFoundException e) {
-      System.out.println(e.getMessage());
-    } catch (IOException e) {
-      System.out.println(e.getClass() + ": " + e.getMessage());
+    public StudentOutput(String fileName) {
+        super();
+        this.fileName = fileName;
     }
-  }
+
+    public void rearrangeData(Comparator<Student> comparator) {
+        // 정렬된 데이터를 임시저장  
+        studentInfo.keySet().stream()
+                .map(studentInfo::get)
+                .sorted(comparator)
+                .forEach(student -> {
+                    names.add(student.getName());
+                    datas.add(student);
+                });
+        // 평균 기준 오름차순 정렬된 순서대로 다시 저장
+        studentInfo = (LinkedHashMap<String, Student>) IntStream.range(0, datas.size())
+                .boxed()
+                .collect(Collectors.toMap(names::get, datas::get));
+    }
+
+    @Override
+    public void printResult() {
+        System.out.println("[평균 오름차순 성적표]");
+        IntStream.rangeClosed(1, datas.size())
+                .forEach(num -> {
+                    Student data = datas.get(num - 1);
+                    System.out.println(data.outputFormat(num));
+                });
+    }
+
+    @Override
+    public void run() {
+        try {
+            loadObjectFromFile(fileName);
+            rearrangeData(Comparator.comparingDouble(Student::getAverage));
+            printResult();
+        } catch (FileNotFoundException | ClassNotFoundException e) {
+            System.err.println(e.getMessage());
+        } catch (IOException e) {
+            System.err.println(e.getClass() + ": " + e.getMessage());
+        }
+    }
 }
 ```
-
 
 **SortedStudent**
 
@@ -544,6 +534,7 @@ public class SortedStudent extends AbstractStudentOutput implements ObjectWriter
         this.outputFile = outputFile;
     }
 
+    // SortedStudent 전체 로직
     @Override
     public void run() {
         try {
@@ -558,6 +549,7 @@ public class SortedStudent extends AbstractStudentOutput implements ObjectWriter
         }
     }
 
+    // SortedStudent에서 사용되는 구체적인 로직을 구현
     public void createTreeSet(Comparator<Student> comparator) {
         sortedInfo = new TreeSet<>(comparator);
         sortedInfo.addAll(studentInfo.values());
@@ -569,7 +561,7 @@ public class SortedStudent extends AbstractStudentOutput implements ObjectWriter
                 [정렬 및 저장: 평균 오름차순]
                 불러온 학생 수: %1$d
                 정렬 규칙: 평균 ASC, 평균 동률이면 이름 사전순 ASC
-        
+                
                 저장 대상(미리보기 상위 %2$d명)
                 """, Math.min(sortedInfo.size(), LIMIT_COUNT), LIMIT_COUNT);
         // 정렬결과 출력 시, 최대 n명의 학생들의 성적을 출력

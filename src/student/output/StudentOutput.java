@@ -2,10 +2,7 @@ package student.output;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import student.domain.Student;
@@ -33,7 +30,7 @@ public class StudentOutput extends AbstractStudentOutput {
                     datas.add(student);
                 });
         // 평균 기준 오름차순 정렬한 결과를 다시 해시맵에 저장
-        studentInfo = (HashMap<String, Student>) IntStream.range(0, datas.size())
+        studentInfo = (LinkedHashMap<String, Student>) IntStream.range(0, datas.size())
                 .boxed()
                 .collect(Collectors.toMap(names::get, datas::get));
     }
@@ -55,9 +52,9 @@ public class StudentOutput extends AbstractStudentOutput {
             rearrangeData(Comparator.comparingDouble(Student::getAverage));
             printResult();
         } catch (FileNotFoundException | ClassNotFoundException e) {
-            System.out.println(e.getMessage());
+            System.err.println(e.getMessage());
         } catch (IOException e) {
-            System.out.println(e.getClass() + ": " + e.getMessage());
+            System.err.println(e.getClass() + ": " + e.getMessage());
         }
     }
 }
