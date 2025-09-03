@@ -246,6 +246,10 @@ public interface Reporter {
 * 입력에 필요한 세부 단계는 추상 메서드로 정의하고 `StudentInput` 클래스에서 구현
 
 ```java
+package student.input;
+
+...
+
 // 콘솔창으로 입력받은 학생별 성적을 직렬화하여 파일로 내보냄
 public abstract class AbstractStudentInput implements Checker, ObjectLoader, ObjectWriter, Reporter {
 
@@ -334,6 +338,10 @@ public abstract class AbstractStudentInput implements Checker, ObjectLoader, Obj
 * `SortedStudent`, `StudentOutput`의 전체 로직을 나타내는 `run()` 메서드는 추상메서드로 정의
 
 ```java
+package student.output;
+
+...
+
 public abstract class AbstractStudentOutput implements ObjectLoader, Reporter {
 
     protected HashMap<String, Student> studentInfo;
@@ -373,6 +381,10 @@ public abstract class AbstractStudentOutput implements ObjectLoader, Reporter {
 - **안내사항의 `saveData()`를 `outputObject(String)`로 대체**
 
 ```java
+package student.input;
+
+...
+
 public class StudentInput extends AbstractStudentInput {
 
     public StudentInput(String fileName) {
@@ -459,7 +471,9 @@ public class StudentInput extends AbstractStudentInput {
 - **안내사항의 `printInfo()` 메서드의 이름을 `printResult()`로 변경**
 
 ```java
-import java.util.ArrayList;
+package student.output;
+
+...
 
 public class StudentOutput extends AbstractStudentOutput {
 
@@ -521,6 +535,10 @@ public class StudentOutput extends AbstractStudentOutput {
 - 직렬화 수행: `outputObject(String)`
 
 ```java
+package student.output;
+
+...
+
 public class SortedStudent extends AbstractStudentOutput implements ObjectWriter {
 
     private static final int LIMIT_COUNT = 10;
