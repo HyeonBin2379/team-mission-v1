@@ -1,12 +1,30 @@
 # Team Mission v.1 - 학생 성적 프로그램
 
-## 1. 클래스 구조 설명
+## 1. 트러블 슈팅: 인터페이스와 추상클래스의 활용
+
+### 개요
+
+- 주요 문제: StudentInput, StudentOutput, SortedStudent 클래스에서 사용하는 메서드의 기능이 중복됨
+- StudentOutput, SortedStudent 클래스는 학생 성적 리스트를 출력하는 역할을 수행한다는 것을 나타내면서도, 다음의 문제점들을 해결하고 싶었음
+  - 메서드들 중 일부 메서드의 코드 중복 문제
+  - StudentOutput, SortedStudent 클래스는 큰 틀에서 정렬 결과를 출력하지만, 실행되는 세부 로직의 차이
+    - StudentOutput: 학생성적 로드 -> 평균 기준 오름차순 정렬 -> 학생성적 리스트 출력 
+    - SortedStudent: 학생성적 로드 -> TreeSet에 저장 -> 정렬 결과 출력 -> 정렬된 학생성적 리스트의 데이터를 파일로 저장
+
+### 클래스 구조 개괄: 문제 해결 방법
 
 ![img.png](src/images/img.png)
 
+- 각각의 클래스에서 사용할 메서드에 관한 4개의 인터페이스를 생성
+- 인터페이스의 다중상속을 활용하여 4개의 인터페이스 중 일부를 조합한 추상 메서드를 통해 학생성적 입력/출력에 관한 추상클래스를 구성
+  - 세부 로직의 차이가 발생하는 메서드는 추상 메서드로 정의
+  - 인터페이스를 조합하여 학생 성적 입력/출력에 관한 추상 클래스를 생성하고, 이를 StudentInput, StudentOutput, SortedStudent 클래스로 구현
+
 ### 인터페이스
 
-- 메서드의 중복을 줄이기 위해 인터페이스를 활용
+- 처음에는 Input, Output, Printable의 3가지 인터페이스를 사용
+- 하지만 위와 같은 3개의 인터페이스만 사용했을 때 빈 디폴트 메서드가 많아지는 문제 발생
+- 다음 4개의 인터페이스로 다시 세분 
 - `Checker`: 기존 `student.dat` 파일의 유무 확인 및 입력 데이터의 유효성 확인
 - `ObjectLoader`: `student.dat` 파일에 저장된 바이트코드를 역직렬화하여 `Student` 객체로 변환
 - `ObjectWriter`: `Student` 객체를 직렬화하여 `student.dat` 파일에 저장
