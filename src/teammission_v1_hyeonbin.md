@@ -2,7 +2,7 @@
 
 ## 1. 클래스 구조 설명
 
-![img.png](img.png)
+![img.png](images/img.png)
 
 ### 인터페이스
 
@@ -40,27 +40,27 @@
 
 ### 1) 학생 점수 입력
 
-![img_1.png](img_1.png)
+![img_1.png](/images/img_1.png)
 
-![img_2.png](img_2.png)
+![img_2.png](images/img_2.png)
 
 ### 2) StudentOutput에서 정렬 후 학생 점수 출력(콘솔창)
 
-![img_3.png](img_3.png)
+![img_3.png](/images/img_3.png)
 
 ### 3) SortedStudent에서 정렬 후 orderByAvg.dat 파일에 저장
 
-![img_4.png](img_4.png)
+![img_4.png](/images/img_4.png)
 
 ### 4) 기존 파일에 이어서 작성
 
 - 이미 `student.dat` 파일이 존재할 경우 이전 내용 뒤에 이어서 저장
 
-![img_5.png](img_5.png)
+![img_5.png](/images/img_5.png)
 
-![img_6.png](img_6.png)
+![img_6.png](/images/img_6.png)
 
-![img_7.png](img_7.png)
+![img_7.png](/images/img_7.png)
 
 ---
 
